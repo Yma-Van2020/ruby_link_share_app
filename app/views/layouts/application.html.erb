@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Link Share" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
+    <title>Reddit</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <% flash.each do |name, msg| %>
+      <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
+    <% end %>
+
+  <% if user_signed_in? %>
+    <ul>
+     <li><%= link_to 'Submit link', new_link_path %></li>
+     <li><%= link_to 'Account', edit_user_registration_path %></li>
+     <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+    </ul>
+   <% else %>
+    <ul>
+     <li><%= link_to 'Sign up', new_user_registration_path%></li>
+     <li><%= link_to 'Sign in', new_user_session_path %></li>
+    </ul>
+  <% end %>
+
     <%= yield %>
   </body>
 </html>

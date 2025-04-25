@@ -18,6 +18,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Use devise to add user authentication to applications.
 gem 'devise'
+# Add ActsAsVotable gem
+gem 'acts_as_votable'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

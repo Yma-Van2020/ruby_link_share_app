@@ -1,12 +1,6 @@
-<% content_for :title, "Editing comment" %>
+<h1>Editing Comment</h1>
 
-<h1>Editing comment</h1>
+<%= render 'form', comment: @comment %>
 
-<%= render "form", comment: @comment %>
-
-<br>
-
-<div>
-  <%= link_to "Show this comment", @comment %> |
-  <%= link_to "Back to comments", comments_path %>
-</div>
+<%= link_to 'Show', @comment %> |
+<%= link_to 'Back', comments_path %>

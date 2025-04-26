@@ -3,6 +3,11 @@ require "test_helper"
 class LinksControllerTest < ActionDispatch::IntegrationTest
   setup do
     @link = links(:one)
+
+    # new line added here
+    get new_user_session_url    # -> devise/sessions#new
+    sign_in users(:test_user)   # sign_in is the devise method to sign in a user
+    post user_session_url       # -> devise/sessions#create
   end
 
   test "should get index" do
@@ -44,5 +49,17 @@ class LinksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to links_url
+  end
+
+  test "create and view link" do
+    # new_link -> links#new
+    get new_link_url
+    assert_response :success
+    
+    # links GET -> links#index, links POST -> links#create
+    post links_url, params: { link: { title: "Test link", url: "success.com" } }
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
   end
 end

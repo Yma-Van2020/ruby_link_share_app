@@ -33,6 +33,23 @@ class LinksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "links header" do
+    get links_url               # -> links#index
+    assert_select 'h1', "Links"
+  end
+
+  test "no forms on index" do
+    get links_url              # -> links#index
+    assert_select 'form', false
+  end
+
+  test "form input name" do
+    get new_link_url          # -> links#new
+    assert_select "form input" do
+      assert_select "[name]"  # Not empty
+    end
+  end
+  
   test "should get edit" do
     get edit_link_url(@link)
     assert_response :success
